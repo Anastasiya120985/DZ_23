@@ -42,7 +42,7 @@ class LinkedList:
         while current is not None:
             count += 1
             current = current.getNext()
-            return count
+        return count
 
     def search(self, value):
         current = self.head
@@ -52,7 +52,13 @@ class LinkedList:
                 found = True
             else:
                 current = current.getNext()
-                return found
+        return found
+
+    def __str__(self):
+        current = self.head
+        while current is not None:
+            print(current.getData())
+            current = current.getNext()
 
     def remove(self, value):
         current = self.head
@@ -69,6 +75,24 @@ class LinkedList:
         else:
             previous.setNext(current.getNext())
 
+    def replacement(self, value):
+        current = self.head
+        previous = None
+        new_current = int(input('Введите новое число для замены в списке: '))
+        found = False
+        while current is not None and not found:
+            if current.getData() == value:
+                found = True
+                current.getData(new_current)
+            else:
+                previous = current
+                current = current.getNext()
+        if previous is None:
+            self.head = current.getNext()
+        else:
+            previous.setNext(current.getNext())
+            return found
+
 
 if __name__ == '__main__':
     l = LinkedList()
@@ -82,17 +106,24 @@ if __name__ == '__main__':
 
         choice = input('Выберите пункт меню "Список чисел": ')
         if choice == '1':
-            l.add(int(input(': ')))
+            l.add(int(input('Введите число для добавления в список: ')))
         elif choice == '2':
-            l.remove(int(input(': ')))
+            l.remove(int(input('Введите число для удаления из списка: ')))
         elif choice == '3':
-            #
-            break
+            print(f'Содержимое списка: ')
+            l.__str__()
         elif choice == '4':
-            l.search(int(input(': ')))
+            s = l.search(int(input('Введите число для поиска в  списке: ')))
+            if s:
+                print('Указанное число есть в списке')
+            else:
+                print('Указанное число отсутствует в списке')
         elif choice == '5':
-            #
-            break
+            s = l.search(int(input('Введите число для замены в  списке: ')))
+            if s:
+                print('Указанное число заменено в списке')
+            else:
+                print('Указанное число отсутствует в списке')
         elif choice == '6':
             break
         else:
